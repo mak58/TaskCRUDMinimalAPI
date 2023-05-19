@@ -1,0 +1,9 @@
+First of all I modifyied the parameter string "Hello World" to a objet Json. ({Guid.NewGuid(), "walk to a pet", false})
+This data was injected by constructor of a "class" called by Tasks. I created a folder called Models. This class was modifyied to a record.
+The application was saved and played. It was possibly seeing the data into a Json file in a browser.
+The next step it was creating a Data folder and installed the packages Entity framework sqlite anda desing.
+In a migration step, happened this error (Não foi possível executar porque o comando ou o arquivo especificado não foi encontrado.)
+I solved the problem installing the .Net Run time.
+https://dotnet.microsoft.com/en-us/download/dotnet/thank-you/runtime-3.0.3-windows-x64-installer?cid=getdotnetcore // installed in windows
+after I updated by command line at terminal dotnet tool update --global dotnet-ef
+Finnaly, created first migration.
