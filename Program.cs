@@ -13,7 +13,7 @@ app.MapGet("/v1/tasks", (AppDbContext context) => {
         Tasks.
         ToList();
     
-    return tasks ==  null ? Results.BadRequest() : Results.Ok(tasks);
+    return tasks is null ? Results.BadRequest() : Results.Ok(tasks);
 });
 
 app.MapPost("v1/tasks", (
