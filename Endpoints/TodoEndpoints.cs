@@ -1,14 +1,12 @@
-
-
 namespace Minimal.Endpoints
 {
     public static class TodoEndpoints
     {
         public static void MapToDoEndpoints(this IEndpointRouteBuilder builder)
-        {
+        {            
             builder.MapGet("/v1/tasks", async ([FromServices] ApplicationDbContext _context) => 
             {    
-                var tasks =  _context
+                var tasks = _context
                     .Tasks
                     .AsNoTracking()
                     .ToList();
@@ -18,12 +16,13 @@ namespace Minimal.Endpoints
 
 
             /// <summary>
-            /// This way to do the Get was copied by @"https://learn.microsoft.com/en-us/aspnet/core/tutorials/min-web-api?view=aspnetcore-7.0&tabs=visual-studio-code"
+            /// This way to create the Get end was copied by @"https://learn.microsoft.com/en-us/aspnet/core/tutorials/min-web-api?view=aspnetcore-7.0&tabs=visual-studio-code"
+            /// Is was user lamda expression and a ternary operator.
             /// </summary>            
             builder.MapGet("tasks/{id}", async ([FromServices] ApplicationDbContext _context, Guid id) =>
                 await _context.Tasks.FindAsync(id) is Tasks tasks ? Results.Ok(tasks) : Results.NotFound());
 
-            builder.MapPost("v1/tasks", async ( [FromBody] CreateTasksViewModels model,
+            builder.MapPost("v1/tasks", async ( [FromBody] TaskValidate model,
                                                 [FromServices] ApplicationDbContext _context) => 
                 {
                     var tasks = model.MapTo();
@@ -37,7 +36,7 @@ namespace Minimal.Endpoints
                 });
 
             builder.MapPut("v1/editTasks/{id}", async ([FromRoute] Guid id,
-                                                        CreateTasksViewModels model,
+                                                        TaskValidate model,
                                                        [FromServices] ApplicationDbContext _context) => 
             {
                 var tasks = model.MapTo();

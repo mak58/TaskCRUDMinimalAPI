@@ -1,10 +1,9 @@
 using Flunt.Notifications;
 using Flunt.Validations;
-using Minimal.Models;
 
-namespace Minimal.ViewModels
+namespace Minimal.DomainValidate
 {
-    public class CreateTasksViewModels : Notifiable<Notification>
+    public class TaskValidate : Notifiable<Notification>
     {
         public string Title { get; set; }
 
