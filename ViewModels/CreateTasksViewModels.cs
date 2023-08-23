@@ -16,7 +16,7 @@ namespace Minimal.ViewModels
         {
             AddNotifications(new Contract<Notification>()
                 .Requires()
-                .IsNotNull(Title, "Informe o título da tarefa!")
+                .IsNotNull(Title, "Informe o título da tarefa!")                
                 .IsGreaterThan(Title, 5, "O Titulo deve conter mais que 5 caracteres!"));
 
                 return new Tasks(Guid.NewGuid(), Title, false);

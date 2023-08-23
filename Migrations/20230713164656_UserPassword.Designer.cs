@@ -10,7 +10,7 @@ using Minimal.Data;
 
 namespace Minimal.Migrations
 {
-    [DbContext(typeof(AppDbContext))]
+    [DbContext(typeof(ApplicationDbContext))]
     [Migration("20230713164656_UserPassword")]
     partial class UserPassword
     {

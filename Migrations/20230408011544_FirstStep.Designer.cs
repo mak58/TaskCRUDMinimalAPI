@@ -10,7 +10,7 @@ using Minimal.Data;
 
 namespace Minimal.Migrations
 {
-    [DbContext(typeof(AppDbContext))]
+    [DbContext(typeof(ApplicationDbContext))]
     [Migration("20230408011544_FirstStep")]
     partial class FirstStep
     {
