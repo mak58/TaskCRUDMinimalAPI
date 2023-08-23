@@ -13,6 +13,8 @@ namespace Minimal.Services
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlite(configuration.GetConnectionString("Database")));
 
+            services.AddScoped<ITaskRepositories, TaskRepositories>();
+
             return services;            
         }        
     }
