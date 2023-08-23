@@ -5,3 +5,4 @@ global using Minimal.Models;
 global using Minimal.DomainValidate;
 global using Microsoft.AspNetCore.Mvc;
 global using Minimal.Services;
+global using Minimal.Interfaces;
