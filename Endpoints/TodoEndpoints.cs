@@ -27,7 +27,7 @@ namespace Minimal.Endpoints
                 });
 
 
-            builder.MapPut("v1/editTasks/{id}", async ([FromRoute] Guid id,
+            builder.MapPut("v1/tasks/{id}", async ([FromRoute] Guid id,
                                                         [FromBody] TaskValidate model,
                                                         [FromServices] ITaskRepositories _taskRepositories) => 
             {
@@ -36,7 +36,7 @@ namespace Minimal.Endpoints
                 return task is null ? Results.BadRequest(model.Notifications) : Results.Ok(task);
             });
 
-            builder.MapDelete("/v1/DeleteTask/{id}", async ([FromRoute] Guid id,
+            builder.MapDelete("/v1/tasks/{id}", async ([FromRoute] Guid id,
                                                                  [FromServices] ApplicationDbContext _context) => 
             {
                

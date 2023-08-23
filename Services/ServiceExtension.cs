@@ -1,8 +1,8 @@
 namespace Minimal.Services
 {
     /// <summary>
-    /// This static class is waiting the applicationt to have a buisiness rule. 
-    /// After that, the life cicle os Dependency Injection will be declared here, avoiding overload the program.cs
+    /// This static class receive the Database ConnectionInterfaces and Depedency Injection of Interfaces and classes. 
+    /// Dependency Injection is being declared here, avoiding overload the program.cs
     /// </summary>
     public static class ServiceExtension
     {

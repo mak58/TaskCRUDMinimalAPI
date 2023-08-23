@@ -1,13 +1,13 @@
 namespace Minimal.Repositories
 {
     public class TaskRepositories : ITaskRepositories
-    {
+    {        
         private readonly ApplicationDbContext _context;
         public TaskRepositories(ApplicationDbContext context)
         {
             _context = context;
         }
-
+        
         public IEnumerable<Tasks> GetTasks()
         {
             var tasks =  _context
