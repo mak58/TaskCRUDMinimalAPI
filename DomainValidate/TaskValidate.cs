@@ -1,6 +1,3 @@
-using Flunt.Notifications;
-using Flunt.Validations;
-
 namespace Minimal.DomainValidate
 {
     public class TaskValidate : Notifiable<Notification>

@@ -1,46 +1,47 @@
-namespace Minimal.Endpoints
-{
-    public static class TodoEndpoints
-    {
-        public static void MapToDoEndpoints(this IEndpointRouteBuilder builder)
-        {           
+namespace Minimal.Endpoints;
 
-            builder.MapGet("/v1/tasks", ([FromServices] ITaskRepositories _taskRepositories) => 
-            {       
-                return _taskRepositories.GetTasks();                
-            });
-
+public static class TodoEndpoints 
+{        
+    public static void MapToDoEndpoints(this IEndpointRouteBuilder endpoint)
+    {                 
+        endpoint.MapGet("v1/tasks", ([FromServices] ITaskRepositories taskRepositories) => 
+        {          
+            return taskRepositories.GetTasks();                
+        });
           
-            builder.MapGet("v1/tasks/{id}", async([FromRoute] Guid id,
-                                                    ITaskRepositories _taskRepositories) =>
-            {
-                return await _taskRepositories.GetTasksById(id);
-            });
+        endpoint.MapGet("v1/tasks{id}", async ([FromRoute] Guid id,
+                                               [FromServices] ITaskRepositories taskRepositories) =>
+        {
+            return await taskRepositories.GetTasksById(id);
+        });
                
+        endpoint.MapPost("v1/tasks", async ([FromBody] TaskValidate model,
+                                            [FromServices] ITaskRepositories taskRepositories) => 
+        {
+            var task = await taskRepositories.PostTask(model);
 
-            builder.MapPost("v1/tasks", async ([FromBody] TaskValidate model,
-                                                [FromServices] ITaskRepositories _taskRepositories) => 
-                {
-                   var task = await _taskRepositories.PostTask(model);
+            return task is null ? Results.BadRequest(model.Notifications) 
+                                : Results.Created($"v1/tasks/{task.Id}", task);
+        });
 
-                    return task is null ? Results.BadRequest(model.Notifications) : Results.Created($"v1/tasks", task);
-                });
+        endpoint.MapPut("v1/tasks/{id}", async ([FromRoute] Guid id,
+                                                [FromBody] TaskValidate model,
+                                                [FromServices] ITaskRepositories taskRepositories) =>
+        {
+            var task = await taskRepositories.GetTasksById(id);
 
+            if (task is null) return Results.BadRequest(model.Notifications);
 
-            builder.MapPut("v1/tasks/{id}", async ([FromRoute] Guid id,
-                                                        [FromBody] TaskValidate model,
-                                                        [FromServices] ITaskRepositories _taskRepositories) => 
-            {
-                var task =  await _taskRepositories.PutTask(id, model); 
+            await taskRepositories.PutTask(id, model);
 
-                return task is null ? Results.BadRequest(model.Notifications) : Results.Ok(task);
-            });
+            return task is null ? Results.BadRequest() : Results.Ok(task);
+        });
 
-            builder.MapDelete("/v1/tasks/{id}", async ([FromRoute] Guid id,
-                                                                 [FromServices] ApplicationDbContext _context) => 
-            {
-               
-            });
-        }
-    }
+        endpoint.MapDelete("/v1/tasks/{id}", ([FromRoute] Guid id,
+                                              [FromServices] ITaskRepositories taskRepositories) => 
+        {
+            taskRepositories.DeleteTask(id); 
+        });
+    }            
 }
+

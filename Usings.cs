@@ -7,3 +7,8 @@ global using Microsoft.AspNetCore.Mvc;
 global using Minimal.Services;
 global using Minimal.Interfaces;
 global using Minimal.Repositories;
+global using Minimal.Enums;
+global using Flunt.Notifications;
+global using Flunt.Validations;
+global using Newtonsoft.Json;
+global using Minimal.Models.Requests;

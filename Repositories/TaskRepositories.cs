@@ -22,7 +22,10 @@ namespace Minimal.Repositories
         {
             var task =  _context
                         .Tasks
+                        .AsNoTracking()                        
                         .FirstOrDefault(x => x.Id == id);
+
+            if (task is null) return null;
 
             return await Task.FromResult(task);
         }
@@ -41,21 +44,15 @@ namespace Minimal.Repositories
         }
 
         public async Task<Tasks> PutTask(Guid id, TaskValidate model)
-        {
+        {        
             var task = model.MapTo();
 
-                if (!model.IsValid) return null;
+            if (task is null) return null;
 
-                var editedTasks = _context.Tasks
-                                    .Where(x => x.Id == id)
-                                    .FirstOrDefault();
-                    
-                if (editedTasks is null) return null;
+            task.Title = task.Title;
 
-                editedTasks.Title = model.Title;
-
-                _context.Tasks.Update(editedTasks);
-                await _context.SaveChangesAsync();
+            _context.Tasks.Update(task);
+            await _context.SaveChangesAsync();
             
             return await Task.FromResult(task);
         }
